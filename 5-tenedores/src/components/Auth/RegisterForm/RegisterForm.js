@@ -2,12 +2,14 @@ import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Input, Icon, Text } from "react-native-elements";
 import { useFormik } from "formik";
-import { initialValues } from "./RegisterForm.data";
+import { initialValues, validationSchema } from "./RegisterForm.data";
 import { styles } from "./RegisterForm.styles";
 
 export function RegisterForm() {
   const formik = useFormik({
     initialValues: initialValues(),
+    validationSchema: validationSchema(),
+    validateOnChange: false,
     onSubmit: (formValue) => {
       console.log("formulario enviado");
       console.log(formValue);
@@ -22,6 +24,7 @@ export function RegisterForm() {
           <Icon type="material-community" name="at" iconStyle={styles.icon} />
         }
         onChangeText={(text) => formik.setFieldValue("email", text)}
+        errorMessage={formik.errors.email}
       />
       <Input
         placeholder="Contraseña"
@@ -35,6 +38,7 @@ export function RegisterForm() {
           />
         }
         onChangeText={(text) => formik.setFieldValue("password", text)}
+        errorMessage={formik.errors.password}
       />
       <Input
         placeholder="Repetir contraseña"
@@ -48,6 +52,7 @@ export function RegisterForm() {
           />
         }
         onChangeText={(text) => formik.setFieldValue("repeatPassword", text)}
+        errorMessage={formik.errors.repeatPassword}
       />
       <TouchableOpacity
         style={styles.btnContainer}
