@@ -1,19 +1,39 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity } from "react-native";
-import { Input, Icon, Text } from "react-native-elements";
+import { Input, Icon, Text, Button } from "react-native-elements";
 import { useFormik } from "formik";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
+//import { screen } from "../../../utils/";
 import { initialValues, validationSchema } from "./RegisterForm.data";
 import { styles } from "./RegisterForm.styles";
 
 export function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigation = useNavigation();
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
-    onSubmit: (formValue) => {
-      console.log("formulario enviado");
-      console.log(formValue);
+    onSubmit: async (formValue) => {
+      try {
+        console.log("1");
+        const auth = getAuth();
+        console.log("2");
+        console.log(formValue.email);
+        console.log(formValue.password);
+        await createUserWithEmailAndPassword(
+          auth,
+          formValue.email,
+          formValue.password
+        );
+        //navigation.navigate(screen.account.account);
+        //Sinonimo a lo de arriba
+        navigation.goBack();
+      } catch (error) {
+        console.log("entra al catch");
+        console.log(error);
+      }
     },
   });
   const showHidePassword = () => setShowPassword((prevState) => !prevState);
