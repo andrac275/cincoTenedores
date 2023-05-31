@@ -9,7 +9,6 @@ export function LoginScreen() {
   const navigation = useNavigation();
 
   const goToRegister = () => {
-    console.log("ir al registro");
     navigation.navigate(screen.account.register);
   };
   return (
