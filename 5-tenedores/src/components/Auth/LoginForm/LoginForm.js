@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { styles } from "./LoginForm.styles";
 import { Input, Icon, Button } from "react-native-elements";
 
 export function LoginForm() {
+  const [hidePass, setVHidePass] = useState(true);
+  const changePassVisibility = () => {
+    setVHidePass((prev) => !prev);
+  };
   return (
     <View style={styles.content}>
       <Input
@@ -16,12 +20,13 @@ export function LoginForm() {
       <Input
         placeholder="Contraseña"
         containerStyle={styles.input}
-        secureTextEntry={true}
+        secureTextEntry={hidePass}
         rightIcon={
           <Icon
             type="material-community"
-            name="eye-outline"
+            name={hidePass ? "eye-outline" : "eye-off-outline"}
             iconStyle={styles.icon}
+            onPress={changePassVisibility}
           />
         }
       />
