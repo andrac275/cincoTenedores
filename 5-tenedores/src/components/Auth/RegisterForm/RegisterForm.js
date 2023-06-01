@@ -4,12 +4,15 @@ import { Input, Icon, Text, Button } from "react-native-elements";
 import { useFormik } from "formik";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-//import { screen } from "../../../utils/";
+import { screen } from "../../../utils/";
 import { initialValues, validationSchema } from "./RegisterForm.data";
 import { styles } from "./RegisterForm.styles";
+import { LoadingModal } from "../../../components";
+import Toast from "react-native-toast-message";
 
 export function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const formik = useFormik({
     initialValues: initialValues(),
@@ -17,22 +20,24 @@ export function RegisterForm() {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        console.log("1");
+        setLoading(true);
         const auth = getAuth();
-        console.log("2");
-        console.log(formValue.email);
-        console.log(formValue.password);
         await createUserWithEmailAndPassword(
           auth,
           formValue.email,
           formValue.password
         );
-        //navigation.navigate(screen.account.account);
+        setLoading(false);
+        navigation.navigate(screen.account.account);
         //Sinonimo a lo de arriba
-        navigation.goBack();
+        //navigation.goBack();
       } catch (error) {
-        console.log("entra al catch");
-        console.log(error);
+        setLoading(false);
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Error al registrarse, intentelo más tarde",
+        });
       }
     },
   });
@@ -85,6 +90,7 @@ export function RegisterForm() {
       >
         <Text style={styles.btnText}>Unirse</Text>
       </TouchableOpacity>
+      <LoadingModal show={loading} text="Creando usuario..." />
     </View>
   );
 }
