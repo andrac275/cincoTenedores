@@ -4,6 +4,7 @@ import { styles } from "./LoginScreen.styles";
 import { Text, Image } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../../utils";
+import { LoginForm } from "../../../components/Auth";
 
 export function LoginScreen() {
   const navigation = useNavigation();
@@ -18,10 +19,14 @@ export function LoginScreen() {
         style={styles.image}
       />
       <View style={styles.content}>
-        <Text>Estamos en el login</Text>
-        <TouchableOpacity onPress={goToRegister}>
-          <Text>Registrarse</Text>
-        </TouchableOpacity>
+        <LoginForm />
+
+        <Text style={styles.textRegister}>
+          ¿Aun no tienes cuenta?{" "}
+          <Text style={styles.btnRegister} onPress={goToRegister}>
+            Registrate
+          </Text>
+        </Text>
       </View>
     </ScrollView>
   );
