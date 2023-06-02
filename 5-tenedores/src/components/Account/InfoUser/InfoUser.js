@@ -17,16 +17,13 @@ export function InfoUser(props) {
       allowsEditing: true,
       aspect: [4, 3],
     });
-    console.log("Datos de la imagen");
-    console.log(result);
     if (!result.canceled) {
-      uploadImage(result.uri);
+      uploadImage(result.assets[0].uri);
     }
   };
 
   const uploadImage = async (uri) => {
-    console.log("uri a subir");
-    console.log(uri);
+    //Subir la imagen al firebase
     setLoadingText("Actualizando avatar");
     setLoading(true);
     const response = await fetch(uri);
@@ -35,13 +32,10 @@ export function InfoUser(props) {
     const storageRef = ref(storage, `avatar/${uid}`);
 
     uploadBytes(storageRef, blob).then((snapShot) => {
-      console.log("Snapshot metadata");
-      console.log(snapShot);
       updatePhotoUrl(snapShot.metadata.fullPath);
     });
     const updatePhotoUrl = async (imagePath) => {
-      console.log("imagePAth");
-      console.log(imagePath);
+      //Actualizar la foto de usuario en el perfil
       const storage = getStorage();
       const imageRef = ref(storage, imagePath);
       const imageUrl = await getDownloadURL(imageRef);
