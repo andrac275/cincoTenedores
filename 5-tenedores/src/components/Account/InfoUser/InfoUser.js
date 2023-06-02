@@ -6,8 +6,9 @@ import { getAuth } from "firebase/auth";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { styles } from "./InfoUser.styles";
 
-export function InfoUser() {
+export function InfoUser(props) {
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
+  const { setLoading, setLoadingText } = props;
 
   const changeAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -25,6 +26,8 @@ export function InfoUser() {
   const uploadImage = async (uri) => {
     console.log("uri a subir");
     console.log(uri);
+    setLoadingText("Actualizando avatar");
+    setLoading(true);
     const response = await fetch(uri);
     const blob = await response.blob();
     const storage = getStorage();
@@ -33,7 +36,13 @@ export function InfoUser() {
     uploadBytes(storageRef, blob).then((snapShot) => {
       console.log("Snapshot metadata");
       console.log(snapShot);
+      updatePhotoUrl(snapShot.metadata.fullPath);
     });
+    const updatePhotoUrl = (imagePath) => {
+      console.log("imagePAth");
+      console.log(imagePath);
+      setLoading(false);
+    };
   };
 
   return (
