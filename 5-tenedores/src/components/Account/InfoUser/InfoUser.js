@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { Avatar, Text } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
-import { getAuth } from "firebase/auth";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getAuth, updateProfile } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { styles } from "./InfoUser.styles";
 
 export function InfoUser(props) {
   const { uid, photoURL, displayName, email } = getAuth().currentUser;
   const { setLoading, setLoadingText } = props;
+  const [avatar, setAvatar] = useState(photoURL);
 
   const changeAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -38,9 +39,15 @@ export function InfoUser(props) {
       console.log(snapShot);
       updatePhotoUrl(snapShot.metadata.fullPath);
     });
-    const updatePhotoUrl = (imagePath) => {
+    const updatePhotoUrl = async (imagePath) => {
       console.log("imagePAth");
       console.log(imagePath);
+      const storage = getStorage();
+      const imageRef = ref(storage, imagePath);
+      const imageUrl = await getDownloadURL(imageRef);
+      const auth = getAuth();
+      updateProfile(auth.currentUser, { photoURL: imageUrl });
+      setAvatar(imageUrl);
       setLoading(false);
     };
   };
@@ -52,7 +59,7 @@ export function InfoUser(props) {
         rounded
         containerStyle={styles.avatar}
         icon={{ type: "material", name: "person" }}
-        source={{ uri: photoURL }}
+        source={{ uri: avatar }}
       >
         <Avatar.Accessory size={24} onPress={changeAvatar} />
       </Avatar>
