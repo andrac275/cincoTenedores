@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { ListItem, Icon, Text } from "react-native-elements";
 import { map } from "lodash";
 import { Modal } from "../../components";
+import { ChangeDisplayNameForm } from "./ChangeDisplayNameForm";
 
 export function AccountOptions() {
   const [showModal, setShowModal] = useState(false);
@@ -12,7 +13,7 @@ export function AccountOptions() {
 
   const selectedComponent = (key) => {
     if (key === "displayName") {
-      setRenderComponent(<Text>Cambiar nombre y apellidos</Text>);
+      setRenderComponent(<ChangeDisplayNameForm onClose={onCloseOpenModal} />);
     } else if (key === "email") {
       setRenderComponent(<Text>Cambiar email</Text>);
     } else if (key === "password") {
