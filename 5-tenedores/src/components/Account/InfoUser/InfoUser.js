@@ -1,8 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 import { Avatar, Text } from "react-native-elements";
-import { getAuth } from "firebase/auth";
 import * as ImagePicker from "expo-image-picker";
+import { getAuth } from "firebase/auth";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { styles } from "./InfoUser.styles";
 
 export function InfoUser() {
@@ -21,9 +22,18 @@ export function InfoUser() {
     }
   };
 
-  const uploadImage = (uri) => {
+  const uploadImage = async (uri) => {
     console.log("uri a subir");
     console.log(uri);
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const storage = getStorage();
+    const storageRef = ref(storage, `avatar/${uid}`);
+
+    uploadBytes(storageRef, blob).then((snapShot) => {
+      console.log("Snapshot metadata");
+      console.log(snapShot);
+    });
   };
 
   return (
