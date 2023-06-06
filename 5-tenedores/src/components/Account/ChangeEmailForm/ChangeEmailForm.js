@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Input, Button } from "react-native-elements";
+import { useFormik } from "formik";
+import { initialValues } from "./ChangeEmailForm.data";
 import { styles } from "./ChangeEmailForm.styles";
 
 export function ChangeEmailForm(props) {
   const { onClose, onReload } = props;
   const [hidePassword, setHidePassword] = useState(true);
+  const formik = useFormik({
+    initialValues: initialValues(),
+  });
 
   const onHidePassword = () => {
     setHidePassword((prevValue) => !prevValue);
