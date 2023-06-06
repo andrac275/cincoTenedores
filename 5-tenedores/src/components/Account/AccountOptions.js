@@ -4,6 +4,7 @@ import { ListItem, Icon, Text } from "react-native-elements";
 import { map } from "lodash";
 import { Modal } from "../../components";
 import { ChangeDisplayNameForm } from "./ChangeDisplayNameForm";
+import { ChangeEmailForm } from "./ChangeEmailForm";
 
 export function AccountOptions(props) {
   const { onReload } = props;
@@ -18,7 +19,9 @@ export function AccountOptions(props) {
         <ChangeDisplayNameForm onClose={onCloseOpenModal} onReload={onReload} />
       );
     } else if (key === "email") {
-      setRenderComponent(<Text>Cambiar email</Text>);
+      setRenderComponent(
+        <ChangeEmailForm onClose={onCloseOpenModal} onReload={onReload} />
+      );
     } else if (key === "password") {
       setRenderComponent(<Text>Cambiar contraseña</Text>);
     }
