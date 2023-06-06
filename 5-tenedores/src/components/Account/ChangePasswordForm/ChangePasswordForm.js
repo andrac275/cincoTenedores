@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Toast from "react-native-toast-message";
+import { useFormik } from "formik";
+import { initialValues, validationSchema } from "./ChangePasswordForm.data";
 import { styles } from "./ChangePasswordForm.styles";
 
 export function ChangePasswordForm(props) {
@@ -9,6 +11,15 @@ export function ChangePasswordForm(props) {
   const [hideOldPassword, setHideOldPassword] = useState(true);
   const [hideNewPassword, setHideNewPassword] = useState(true);
   const [hideRepeatNewPassword, setHideRepeatNewPassword] = useState(true);
+
+  const formik = useFormik({
+    initialValues: initialValues(),
+    validationSchema: validationSchema(),
+    validateOnChange: false,
+    onSubmit: async (formValue) => {
+      console.log(formValue);
+    },
+  });
 
   const onHideOldPassword = () => {
     setHideOldPassword((oldValue) => !oldValue);
@@ -34,6 +45,10 @@ export function ChangePasswordForm(props) {
           color: "#c2c2c2",
           onPress: onHideOldPassword,
         }}
+        onChangeText={(text) => {
+          formik.setFieldValue("password", text);
+        }}
+        errorMessage={formik.errors.password}
       />
       <Input
         placeholder="Nueva contraseña"
@@ -45,6 +60,10 @@ export function ChangePasswordForm(props) {
           color: "#c2c2c2",
           onPress: onHideNewPassword,
         }}
+        onChangeText={(text) => {
+          formik.setFieldValue("newPassword", text);
+        }}
+        errorMessage={formik.errors.newPassword}
       />
       <Input
         placeholder="Repetir nueva contraseña"
@@ -56,12 +75,18 @@ export function ChangePasswordForm(props) {
           color: "#c2c2c2",
           onPress: onHideRepeatNewPassword,
         }}
+        onChangeText={(text) => {
+          formik.setFieldValue("repeatNewPassord", text);
+        }}
+        errorMessage={formik.errors.repeatNewPassord}
       />
 
       <Button
         title="Cambiar contraseña"
         containerStyle={styles.btnContainer}
         buttonStyle={styles.btn}
+        onPress={formik.submitForm}
+        loading={formik.isSubmitting}
       />
     </View>
   );
