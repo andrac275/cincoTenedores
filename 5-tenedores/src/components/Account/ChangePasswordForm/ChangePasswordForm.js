@@ -3,6 +3,12 @@ import { View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import { useFormik } from "formik";
+import {
+  getAuth,
+  updatePassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+} from "firebase/auth";
 import { initialValues, validationSchema } from "./ChangePasswordForm.data";
 import { styles } from "./ChangePasswordForm.styles";
 
@@ -17,7 +23,22 @@ export function ChangePasswordForm(props) {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log(formValue);
+      try {
+        const currentUser = getAuth().currentUser;
+        const credentials = EmailAuthProvider.credential(
+          currentUser.email,
+          formValue.password
+        );
+        reauthenticateWithCredential(currentUser, credentials);
+        await updatePassword(currentUser, formValue.newPassword);
+        onClose();
+      } catch (error) {
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Error al cambiar las password",
+        });
+      }
     },
   });
 
