@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View } from "react-native";
+import { Button } from "react-native-elements";
 import { styles } from "./MapForm.styles";
 import * as Location from "expo-location";
 import Toast from "react-native-toast-message";
@@ -39,17 +40,27 @@ export function MapForm(props) {
 
   return (
     <Modal show={show} close={close}>
-      <View>
-        <MapView
-          initialRegion={location}
-          showsUserLocation={true}
-          style={styles.mapStyle}
-          onRegionChange={(locationTemp) => {
-            setLocation(locationTemp);
-          }}
-        >
-          <MapView.Marker draggable coordinate={location} />
-        </MapView>
+      <MapView
+        initialRegion={location}
+        showsUserLocation={true}
+        style={styles.mapStyle}
+        onRegionChange={(locationTemp) => {
+          setLocation(locationTemp);
+        }}
+      >
+        <Marker draggable coordinate={location} />
+      </MapView>
+      <View style={styles.mapActions}>
+        <Button
+          title="Guardar"
+          containerStyle={styles.btnMapContainerSave}
+          buttonStyle={styles.btnMapSave}
+        />
+        <Button
+          title="Cerrar"
+          containerStyle={styles.btnMapContainerCancel}
+          buttonStyle={styles.btnMapCancel}
+        />
       </View>
     </Modal>
   );
