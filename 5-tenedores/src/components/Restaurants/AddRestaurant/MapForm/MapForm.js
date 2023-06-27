@@ -8,7 +8,7 @@ import { Modal } from "../../../Shared";
 import MapView, { Marker } from "react-native-maps";
 
 export function MapForm(props) {
-  const { show, close } = props;
+  const { show, close, formik } = props;
   const [location, setLocation] = useState({
     latitude: 0.001,
     longitude: 0.001,
@@ -38,6 +38,11 @@ export function MapForm(props) {
     })();
   }, []);
 
+  const saveLocation = () => {
+    formik.setFieldValue("location", location);
+    close();
+  };
+
   return (
     <Modal show={show} close={close}>
       <MapView
@@ -55,11 +60,13 @@ export function MapForm(props) {
           title="Guardar"
           containerStyle={styles.btnMapContainerSave}
           buttonStyle={styles.btnMapSave}
+          onPress={saveLocation}
         />
         <Button
           title="Cerrar"
           containerStyle={styles.btnMapContainerCancel}
           buttonStyle={styles.btnMapCancel}
+          onPress={close}
         />
       </View>
     </Modal>

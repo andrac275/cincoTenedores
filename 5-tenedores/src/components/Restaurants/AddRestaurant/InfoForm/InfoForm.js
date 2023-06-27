@@ -56,7 +56,7 @@ export function InfoForm(props) {
           errorMessage={formik.errors.description}
         />
       </View>
-      <MapForm show={showMap} close={onOpenCloseMap} />
+      <MapForm show={showMap} close={onOpenCloseMap} formik={formik} />
     </>
   );
 }
