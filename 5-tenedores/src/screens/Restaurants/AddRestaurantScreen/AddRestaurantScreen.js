@@ -1,9 +1,10 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import {
   InfoForm,
   UploadImagesForm,
+  ImageRestaurant,
 } from "../../../components/Restaurants/AddRestaurant";
 import { styles } from "./AddRestaurantScreen.styles";
 import { useFormik } from "formik";
@@ -19,7 +20,8 @@ export function AddRestaurantScreen() {
     },
   });
   return (
-    <View>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <ImageRestaurant formik={formik} />
       <InfoForm formik={formik} />
       <UploadImagesForm formik={formik} />
       <Button
@@ -28,6 +30,6 @@ export function AddRestaurantScreen() {
         onPress={formik.handleSubmit}
         loading={formik.isSubmitting}
       />
-    </View>
+    </ScrollView>
   );
 }
