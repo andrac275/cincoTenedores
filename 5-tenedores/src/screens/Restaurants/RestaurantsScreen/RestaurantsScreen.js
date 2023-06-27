@@ -6,6 +6,7 @@ import { styles } from "./RestaurantsScreen.styles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { LoadingModal } from "../../../components/Shared";
+import { ListRestaurants } from "../../../components/Restaurants";
 
 export function RestaurantsScreen(props) {
   const { navigation } = props;
@@ -44,7 +45,7 @@ export function RestaurantsScreen(props) {
       {!restaurants ? (
         <LoadingModal show text="Cargando lista de restaurantes" />
       ) : (
-        <Text>Listado restaurantes 2</Text>
+        <ListRestaurants restaurants={restaurants} />
       )}
 
       {currentUser && (
