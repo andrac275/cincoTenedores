@@ -2,6 +2,8 @@ import React from "react";
 import { View, Alert } from "react-native";
 import { Icon, Avatar, Text } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 as uuid } from "uuid";
 import { styles } from "./UploadImagesForm.styles";
 
 export function UploadImagesForm(props) {
@@ -16,9 +18,20 @@ export function UploadImagesForm(props) {
     });
 
     if (!result.canceled) {
-      console.log("upload image");
+      uploadImage(result.assets[0].uri);
     }
   };
+
+  const uploadImage = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const storage = getStorage();
+    const storageRef = ref(storage, `restaurants/${uuid()}`);
+    uploadBytes(storageRef, blob).then((snapshot) => {
+      console.log(snapshot);
+    });
+  };
+
   return (
     <>
       <View style={styles.viewImage}>
