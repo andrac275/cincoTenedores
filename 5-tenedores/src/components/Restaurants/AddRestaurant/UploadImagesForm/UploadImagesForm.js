@@ -4,6 +4,7 @@ import { Icon, Avatar, Text } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { UUID } from "uuidjs";
+import { map } from "lodash";
 import { LoadingModal } from "../../../Shared";
 import { styles } from "./UploadImagesForm.styles";
 
@@ -55,6 +56,13 @@ export function UploadImagesForm(props) {
           containerStyle={styles.containerIcon}
           onPress={openGallery}
         />
+        {map(formik.values.images, (image) => (
+          <Avatar
+            key={image}
+            containerStyle={styles.imageStyle}
+            source={{ uri: image }}
+          />
+        ))}
       </View>
       <Text style={styles.error}>{formik.errors.images}</Text>
       <LoadingModal show={isLoading} text="Subiendo imagen" />
