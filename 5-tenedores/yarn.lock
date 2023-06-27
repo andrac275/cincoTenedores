@@ -7709,6 +7709,11 @@ uuid@^9.0.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
   integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
+uuidjs@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/uuidjs/-/uuidjs-5.0.1.tgz#c41362de8b3146e8c0ef4b150f257078a592610f"
+  integrity sha512-W9ea6Rj0L4P7YyLpUYqDoqoBEH7AP1NshTYqXeAs9GoK3ynWco9VkWGzV7aqWjCyFEBbPgCCIBKiTJXOmlTTag==
+
 valid-url@~1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/valid-url/-/valid-url-1.0.9.tgz#1c14479b40f1397a75782f115e4086447433a200"

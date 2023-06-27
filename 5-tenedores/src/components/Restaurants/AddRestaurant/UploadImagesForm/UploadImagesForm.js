@@ -3,7 +3,7 @@ import { View, Alert } from "react-native";
 import { Icon, Avatar, Text } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 as uuid } from "uuid";
+import { UUID } from "uuidjs";
 import { LoadingModal } from "../../../Shared";
 import { styles } from "./UploadImagesForm.styles";
 
@@ -29,7 +29,7 @@ export function UploadImagesForm(props) {
     const response = await fetch(uri);
     const blob = await response.blob();
     const storage = getStorage();
-    const storageRef = ref(storage, `restaurants/${uuid()}`);
+    const storageRef = ref(storage, `restaurants/${UUID.generate()}`);
     uploadBytes(storageRef, blob).then((snapshot) => {
       updatePhotosRestaurant(snapshot.metadata.fullPath);
     });
