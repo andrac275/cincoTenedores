@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Icon } from "react-native-elements";
-import { screen } from "../../../utils";
+import { screen, db } from "../../../utils";
 import { styles } from "./RestaurantsScreen.styles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 export function RestaurantsScreen(props) {
   const { navigation } = props;
   const [currentUser, setCurrentUser] = useState(null);
+  const [restaurants, setRestaurants] = useState(null);
 
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
+    });
+  }, []);
+
+  useEffect(() => {
+    const q = query(
+      collection(db, "restaurants"),
+      orderBy("createdAt", "desc")
+    );
+    onSnapshot(q, (snapShot) => {
+      setRestaurants(snapShot.docs);
     });
   }, []);
 
