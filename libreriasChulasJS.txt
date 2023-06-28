@@ -9,6 +9,8 @@ import { ScrollView, Dimensions } from "react-native";
 //React native elements: para hacer casi de todo
 import { Text } from "react-native-elements";
     Rating: Para estrellitas
+    ListItem:
+    Icon:
 
 //Para carousel de imagenes
 import CarouselSnap, { Pagination } from "react-native-snap-carousel";
