@@ -9,7 +9,11 @@ import {
   where,
   orderBy,
 } from "firebase/firestore";
-import { Header, Info } from "../../../components/RestaurantInfo";
+import {
+  Header,
+  Info,
+  BtnReviewForm,
+} from "../../../components/RestaurantInfo";
 import { Carousel, Loading } from "../../../components/Shared";
 import { styles } from "./RestaurantInfoScreen.styles";
 
@@ -33,6 +37,7 @@ export function RestaurantInfoScreen(props) {
       <Carousel arrayImages={restaurant.images} height={250} width={width} />
       <Header restaurant={restaurant} />
       <Info restaurant={restaurant} />
+      <BtnReviewForm idRestaurant={restaurant.id} />
     </ScrollView>
   );
 }
