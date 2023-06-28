@@ -9,7 +9,7 @@ import {
   where,
   orderBy,
 } from "firebase/firestore";
-import { Carousel } from "../../../components/Shared";
+import { Carousel, Loading } from "../../../components/Shared";
 import { styles } from "./RestaurantInfoScreen.styles";
 
 const { width } = Dimensions.get("window");
@@ -25,7 +25,7 @@ export function RestaurantInfoScreen(props) {
     });
   }, [route.params.id]);
 
-  if (!restaurant) return null;
+  if (!restaurant) return <Loading show text="Cargando restaurante" />;
 
   return (
     <ScrollView style={styles.content}>
