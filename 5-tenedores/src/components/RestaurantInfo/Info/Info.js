@@ -2,6 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { Text, ListItem, Icon } from "react-native-elements";
 import { map } from "lodash";
+import { Map } from "../../Shared";
 import { styles } from "./Info.styles";
 
 export function Info(props) {
@@ -29,6 +30,7 @@ export function Info(props) {
     <>
       <View style={styles.content}>
         <Text style={styles.title}>Información sobre el restaurante</Text>
+        <Map location={restaurant.location} name={restaurant.name} />
         {map(listInfo, (item, index) => (
           <ListItem key={index} buttonDivider>
             <Icon type={item.iconType} name={item.iconName} color="#00a680" />

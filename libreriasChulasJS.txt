@@ -20,6 +20,9 @@ import CarouselSnap, { Pagination } from "react-native-snap-carousel";
 //expo-image-picker: Tema de escoger imagenes
 import * as ImagePicker from "expo-image-picker";
 
+//react-native-maps: Para trabajar con mapas
+import MapView, { Marker } from "react-native-maps";
+
 //Formik: Para el tema de guardar datos de formulario, validaciones, mostrarLoadings, errores...
 import { useFormik } from "formik";
 
