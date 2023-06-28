@@ -23,6 +23,9 @@ import * as ImagePicker from "expo-image-picker";
 //react-native-maps: Para trabajar con mapas
 import MapView, { Marker } from "react-native-maps";
 
+//react-native-open-maps: Para abrir google maps o apple maps, asi se puede usar el navegador
+import openMap from "react-native-open-maps"
+
 //Formik: Para el tema de guardar datos de formulario, validaciones, mostrarLoadings, errores...
 import { useFormik } from "formik";
 
