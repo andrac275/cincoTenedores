@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { ScrollView, Dimensions } from "react-native";
 import { db } from "../../../utils";
 import {
   doc,
@@ -9,7 +9,10 @@ import {
   where,
   orderBy,
 } from "firebase/firestore";
+import { Carousel } from "../../../components/Shared";
 import { styles } from "./RestaurantInfoScreen.styles";
+
+const { width } = Dimensions.get("window");
 
 export function RestaurantInfoScreen(props) {
   const { route } = props;
@@ -22,9 +25,11 @@ export function RestaurantInfoScreen(props) {
     });
   }, [route.params.id]);
 
+  if (!restaurant) return null;
+
   return (
-    <View>
-      <Text>RestaurantInformationScreen</Text>
-    </View>
+    <ScrollView style={styles.content}>
+      <Carousel arrayImages={restaurant.images} height={250} width={width} />
+    </ScrollView>
   );
 }
