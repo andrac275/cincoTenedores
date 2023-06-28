@@ -1,0 +1,27 @@
+//Lodash hace lo mismo que JS, pero te gestiona los null, asi que no te peta.
+import { map, filter, size } from "lodash";
+
+//React native tiene cosas muy utiles
+import { ScrollView, Dimensions } from "react-native";
+    Dimensions: Permite sacar cosas como el ancho de la pantalla del movil
+    ActivityIndicator: Saca un circuilito dando vueltas para las cargas
+
+//React native elements: para hacer casi de todo
+import { Text } from "react-native-elements";
+
+//Para carousel de imagenes
+import CarouselSnap, { Pagination } from "react-native-snap-carousel";
+    CarouselSnap: El carousel en si
+    Pagination: El sistema de dots de las imagenes
+
+//expo-image-picker: Tema de escoger imagenes
+import * as ImagePicker from "expo-image-picker";
+
+//Formik: Para el tema de guardar datos de formulario, validaciones, mostrarLoadings, errores...
+import { useFormik } from "formik";
+
+//Toast: Para mensajes de error
+import Toast from "react-native-toast-message";
+
+//uuidjs: Para el tema de generar hashes unicos
+import { UUID } from "uuidjs";
