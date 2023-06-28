@@ -2,13 +2,17 @@ import React from "react";
 import { View, FlatList, TouchableOpacity } from "react-native";
 import { Text, Image } from "react-native-elements";
 import { styles } from "./ListRestaurants.styles";
+import { useNavigation } from "@react-navigation/native";
+import { screen } from "../../../utils";
 
 export function ListRestaurants(props) {
   const { restaurants } = props;
+  const navigation = useNavigation();
 
   const goToRestaurant = (restaurant) => {
-    console.log("Ir al restaurante");
-    console.log(restaurant.name);
+    navigation.navigate(screen.restaurant.restaurantInfo, {
+      id: restaurant.id,
+    });
   };
 
   return (
