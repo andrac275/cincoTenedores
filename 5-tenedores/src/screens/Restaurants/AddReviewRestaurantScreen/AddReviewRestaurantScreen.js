@@ -6,6 +6,19 @@ import {
   validationSchema,
 } from "./AddReviewRestaurantScreen.data";
 import { useFormik } from "formik";
+import Toast from "react-native-toast-message";
+import { UUID } from "uuidjs";
+import { getAuth } from "firebase/auth";
+import {
+  doc,
+  setDoc,
+  query,
+  collection,
+  where,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../../../utils/";
 import { styles } from "./AddReviewRestaurantScreen.styles";
 
 export function AddReviewRestaurantScreen(props) {
@@ -15,7 +28,24 @@ export function AddReviewRestaurantScreen(props) {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log(formValue);
+      try {
+        const auth = getAuth();
+        const idDoc = UUID.generate();
+        const newData = formValue;
+        newData.id = idDoc;
+        newData.idRestaurant = route.params.idRestaurant;
+        newData.idUser = auth.currentUser.uid;
+        newData.avatar = auth.currentUser.photoURL;
+        newData.createdAt = new Date();
+
+        await setDoc(doc(db, "reviews", idDoc), newData);
+      } catch (error) {
+        Toast.show({
+          type: "error",
+          position: "bottom",
+          text1: "Error al enviar el comentario",
+        });
+      }
     },
   });
 
