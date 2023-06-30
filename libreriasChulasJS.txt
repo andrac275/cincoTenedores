@@ -1,5 +1,6 @@
 //Lodash hace lo mismo que JS, pero te gestiona los null, asi que no te peta.
 import { map, filter, size } from "lodash";
+    mean: funcion de lodash que saca la media de un array con valores numericos
 
 //React native tiene cosas muy utiles
 import { ScrollView, Dimensions } from "react-native";

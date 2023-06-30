@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { AirbnbRating, Input, Button } from "react-native-elements";
 import {
   initialValues,
@@ -18,11 +18,15 @@ import {
   onSnapshot,
   updateDoc,
 } from "firebase/firestore";
+import { map, mean } from "lodash";
 import { db } from "../../../utils/";
+import { useNavigation } from "@react-navigation/native";
 import { styles } from "./AddReviewRestaurantScreen.styles";
 
 export function AddReviewRestaurantScreen(props) {
   const { route } = props;
+  const navigation = useNavigation();
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
@@ -39,6 +43,7 @@ export function AddReviewRestaurantScreen(props) {
         newData.createdAt = new Date();
 
         await setDoc(doc(db, "reviews", idDoc), newData);
+        await updateRestaurant();
       } catch (error) {
         Toast.show({
           type: "error",
@@ -48,6 +53,32 @@ export function AddReviewRestaurantScreen(props) {
       }
     },
   });
+
+  const updateRestaurant = async () => {
+    //Obtener todas las reviews de un determinado restaurante
+    const q = query(
+      collection(db, "reviews"),
+      where("idRestaurant", "==", route.params.idRestaurant)
+    );
+
+    //Se ejecuta la query anterior
+    onSnapshot(q, async (snapShot) => {
+      //Array con todas las reviews
+      const reviews = snapShot.docs;
+      //Map para iterar las reviews y contruir un array de puntuaciones
+      const arrayStars = map(reviews, (review) => review.data().rating);
+      //Mean: funcion de lodash que saca la media de un array numerico
+      const media = mean(arrayStars);
+      //Obtener el restaurante al que le hemos escrito la review
+      const restaurantRef = doc(db, "restaurants", route.params.idRestaurant);
+      //Actualizar la media del restaurante
+      await updateDoc(restaurantRef, {
+        ratingMedia: media,
+      });
+
+      navigation.goBack();
+    });
+  };
 
   return (
     <View style={styles.content}>
