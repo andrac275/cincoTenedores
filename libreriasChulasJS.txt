@@ -35,3 +35,12 @@ import Toast from "react-native-toast-message";
 
 //uuidjs: Para el tema de generar hashes unicos
 import { UUID } from "uuidjs";
+
+//luxon: para trabajar con fechas
+    //Tiene dependencia con el paquete "intl"
+import {DateTime} from "luxon"
+    //intl: necesario para luxon
+        yarn add intl
+        import "intl"
+        import "intl/locale-data/jsonp/es"
+

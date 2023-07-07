@@ -9,9 +9,12 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { map } from "lodash";
+import { DateTime } from "luxon";
 import { Loading } from "../../Shared";
 import { db } from "../../../utils";
 import { styles } from "./Reviews.styles";
+import "intl";
+import "intl/locale-data/jsonp/es";
 
 export function Reviews(props) {
   const { idRestaurant } = props;
@@ -53,7 +56,11 @@ export function Reviews(props) {
                     isDisabled
                     starContainerStyle={styles.starContainer}
                   />
-                  <Text style={styles.date}>{String(createdReview)}</Text>
+                  <Text style={styles.date}>
+                    {DateTime.fromISO(createdReview.toISOString()).toFormat(
+                      "yyyy/LL/dd - hh:mm"
+                    )}
+                  </Text>
                 </View>
               </View>
             </ListItem.Content>
