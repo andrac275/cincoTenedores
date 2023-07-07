@@ -1,13 +1,37 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { Icon } from "react-native-elements";
+import { getAuth } from "firebase/auth";
+import {
+  doc,
+  setDoc,
+  getDocs,
+  query,
+  where,
+  collection,
+  deleteDoc,
+} from "firebase/firestore";
+import { db } from "../../../utils";
+import { UUID } from "uuidjs";
 import { styles } from "./BtnFavorite.styles";
 
 export function BtnFavorite(props) {
   const { idRestaurant } = props;
+  const auth = getAuth();
 
-  const addFavorite = () => {
-    console.log("anadir a favorito");
+  const addFavorite = async () => {
+    try {
+      const idFavorite = UUID.generate();
+      const data = {
+        id: idFavorite,
+        idRestaurant: idRestaurant,
+        idUser: auth.currentUser.uid,
+      };
+
+      await setDoc(doc(db, "favorites", idFavorite), data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
