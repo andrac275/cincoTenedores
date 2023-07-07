@@ -30,6 +30,8 @@ export function FavoritesScreen() {
   }, []);
 
   useEffect(() => {
+    if (!hasLogged) return;
+
     const q = query(
       collection(db, "favorites"),
       where("idUser", "==", auth.currentUser.uid)
@@ -48,7 +50,7 @@ export function FavoritesScreen() {
 
       setRestaurants(restaurantArray);
     });
-  }, []);
+  }, [hasLogged]);
 
   if (!hasLogged) return <UserNotLogged />;
   if (!restaurants) return <Loading show text="Cargando..." />;
