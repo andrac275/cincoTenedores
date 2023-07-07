@@ -20,6 +20,7 @@ export function BtnFavorite(props) {
   const { idRestaurant } = props;
   const auth = getAuth();
   const [isFavorite, setIsFavorite] = useState(undefined);
+  const [isReload, setIsReload] = useState(false);
 
   useEffect(() => {
     //Esto es una funcion anonima autoejecutable
@@ -31,7 +32,11 @@ export function BtnFavorite(props) {
         setIsFavorite(false);
       }
     })();
-  }, [idRestaurant]);
+  }, [idRestaurant, isReload]);
+
+  const onReload = () => {
+    setIsReload((prevState) => !prevState);
+  };
 
   const getFavorites = async () => {
     const q = query(
@@ -54,6 +59,7 @@ export function BtnFavorite(props) {
       };
 
       await setDoc(doc(db, "favorites", idFavorite), data);
+      onReload();
     } catch (error) {
       console.log(error);
     }
