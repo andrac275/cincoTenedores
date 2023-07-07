@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../utils";
 import { UUID } from "uuidjs";
-import { size } from "lodash";
+import { size, forEach } from "lodash";
 import { styles } from "./BtnFavorite.styles";
 
 export function BtnFavorite(props) {
@@ -66,7 +66,15 @@ export function BtnFavorite(props) {
   };
 
   const removeFavorite = async () => {
-    console.log("borrando favorito");
+    try {
+      const response = await getFavorites();
+      forEach(response, async (item) => {
+        await deleteDoc(doc(db, "favorites", item.id));
+      });
+      onReload();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
