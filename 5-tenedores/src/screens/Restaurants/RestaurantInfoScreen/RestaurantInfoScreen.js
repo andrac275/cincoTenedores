@@ -13,6 +13,7 @@ import {
   Header,
   Info,
   BtnReviewForm,
+  Reviews,
 } from "../../../components/RestaurantInfo";
 import { Carousel, Loading } from "../../../components/Shared";
 import { styles } from "./RestaurantInfoScreen.styles";
@@ -37,7 +38,8 @@ export function RestaurantInfoScreen(props) {
       <Carousel arrayImages={restaurant.images} height={250} width={width} />
       <Header restaurant={restaurant} />
       <Info restaurant={restaurant} />
-      <BtnReviewForm idRestaurant={restaurant.id} />
+      <BtnReviewForm idRestaurant={route.params.id} />
+      <Reviews idRestaurant={route.params.id} />
     </ScrollView>
   );
 }
