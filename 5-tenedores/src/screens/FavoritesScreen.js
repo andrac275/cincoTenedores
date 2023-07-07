@@ -9,7 +9,9 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
-import { UserNotLogged } from "../components/Favorites";
+import { size } from "lodash";
+import { UserNotLogged, NotFoundRestaurants } from "../components/Favorites";
+import { Loading } from "../components/Shared";
 import { db } from "../utils";
 
 export function FavoritesScreen() {
@@ -45,6 +47,8 @@ export function FavoritesScreen() {
   }, []);
 
   if (!hasLogged) return <UserNotLogged />;
+  if (!restaurants) return <Loading show text="Cargando..." />;
+  if (size(restaurants) === 0) return <NotFoundRestaurants />;
   return (
     <View>
       <Text>Estamos en la screen de FavoritesScreen</Text>
