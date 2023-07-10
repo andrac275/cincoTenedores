@@ -2,9 +2,21 @@ import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Image, Text, Rating, Icon } from "react-native-elements";
 import { styles } from "./RestaurantRanking.styles";
+import { useNavigation } from "@react-navigation/native";
+import { screen } from "../../../utils";
 
 export function RestaurantRanking(props) {
   const { restaurant, index } = props;
+  const navigation = useNavigation();
+
+  const goToRestaurant = () => {
+    navigation.navigate(screen.restaurant.tab, {
+      screen: screen.restaurant.restaurantInfo,
+      params: {
+        id: restaurant.id,
+      },
+    });
+  };
 
   const renderMedal = () => {
     if (index > 2) return null; // que no muestre mas de 3 medallas. A partir de la 4a, no lo muestra
@@ -16,7 +28,6 @@ export function RestaurantRanking(props) {
     } else if (index === 2) {
       color = "#CD7F32"; //bronbze
     }
-
     return (
       <Icon
         type="material-community"
@@ -28,7 +39,7 @@ export function RestaurantRanking(props) {
   };
 
   return (
-    <TouchableOpacity onPress={() => console.log("go to screen")}>
+    <TouchableOpacity onPress={goToRestaurant}>
       <View style={styles.content}>
         <Image source={{ uri: restaurant.images[0] }} style={styles.image} />
         <View style={styles.infoContent}>
