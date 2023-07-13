@@ -10,13 +10,23 @@ import {
   limit,
   orderBy,
 } from "firebase/firestore";
-import { db } from "../utils/";
+import { db, screen } from "../utils/";
 import { size, map } from "lodash";
 import { Loading } from "../components/Shared";
+import { useNavigation } from "@react-navigation/native";
 
 export function SearchScreen() {
   const [searchResults, setSearchResults] = useState(null);
   const [searchText, setSearchText] = useState("");
+  const navigation = useNavigation();
+
+  const goToRestaurant = (idRestaurant) => {
+    console.log("first");
+    navigation.navigate(screen.restaurant.tab, {
+      screen: screen.restaurant.restaurantInfo,
+      params: { id: idRestaurant },
+    });
+  };
 
   useEffect(() => {
     (async () => {
@@ -56,7 +66,7 @@ export function SearchScreen() {
               <ListItem
                 key={data.id}
                 bottomDivider
-                onPress={() => console.log("go to restaurant")}
+                onPress={() => goToRestaurant(data.id)}
               >
                 <Avatar source={{ uri: data.images[0] }} rounded />
                 <ListItem.Content>
