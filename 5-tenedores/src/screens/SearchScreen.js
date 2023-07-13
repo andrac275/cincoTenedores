@@ -11,6 +11,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { db } from "../utils/";
+import { size, map } from "lodash";
 import { Loading } from "../components/Shared";
 
 export function SearchScreen() {
@@ -41,6 +42,32 @@ export function SearchScreen() {
       />
 
       {!searchResults && <Loading show text="Cargando..." />}
+
+      <ScrollView>
+        {size(searchResults) === 0 ? (
+          <View style={{ alignItems: "center", marginTop: 20 }}>
+            <Text>No se han encontrado resultados</Text>
+          </View>
+        ) : (
+          map(searchResults, (item) => {
+            const data = item.data();
+
+            return (
+              <ListItem
+                key={data.id}
+                bottomDivider
+                onPress={() => console.log("go to restaurant")}
+              >
+                <Avatar source={{ uri: data.images[0] }} rounded />
+                <ListItem.Content>
+                  <ListItem.Title>{data.name}</ListItem.Title>
+                </ListItem.Content>
+                <Icon type="material-community" name="chevron-right" />
+              </ListItem>
+            );
+          })
+        )}
+      </ScrollView>
     </>
   );
 }
