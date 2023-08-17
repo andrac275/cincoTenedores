@@ -1,0 +1,47 @@
+Estas instrucciones estan basadas en:
+	-Docu oficial:	https://docs.expo.dev/build/setup/
+	-Video de yt:	https://www.youtube.com/watch?v=fUS_BjOHi-c
+############
+En la docu oficial dice como crear un proyecto nuevo. Lo pongo por si fuera un requisito:
+NOTA! En algun momento hay que hacer un yarn install o npm install para que pueda correr el proyecto y seguir metiendo comandos, pero no recuerdo
+cuando es ese momento.
+
+-Crear proyecto con el siguiente comando:
+	npx create-expo-app nombreDeLaApp
+-Instalas expo cli
+	npm install -g expo-cli
+
+-Instalar eas cli
+	npm install -g eas-cli
+
+-Loggearse en expo, o mirar si ya estoy loggeado:
+	eas whoami
+	eas login
+
+-Crear el json de configuracion que es el eas.json
+	eas build:configure
+
+En el objeto de configuracion eas.json, en build->preview, quitar la linea ' "distribution": "internal" ' 
+y poner solo dentro del preview:  "android": {"buildType": "apk"}, quedara asi:
+
+------Fragmento del eas.json---------
+"build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {}
+  },
+-------------
+
+Hacer la build con el comando:
+	eas build --platform android --profile preview
+
+Pregunta id del proyecto, yo puse esto: com.andrac275.cincoTenedores (para tenerlo en cuenta)
+
+Si partirmos de un proyecto nuevo deberia funcionar todo sin problemas, pero si el proyecto ya tiene librerias y cosas instaladas, alomejor falla, y ahi habra que buscar como arreglarlo.
