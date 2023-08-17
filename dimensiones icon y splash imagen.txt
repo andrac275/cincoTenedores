@@ -1,0 +1,8 @@
+El icon es un PNG de tipo RGB de 192x192 pixeles
+
+El splash es un PNG de tipo RGB de tamaño 1242x2436
+    En el fichero app.json dentro del objeto de configuracion, en splash->backGroundColor, se puede poner 
+    #00a680 para que aparezca el verde corporativo arriba y abajo y no queden los margenes de color blanco.
+
+    NOTA: si en splash->resizeMode de pone "cover" en lugar de "contain", hace un efecto similar. Rellena con 
+    el color verde corporativo
