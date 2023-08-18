@@ -45,3 +45,8 @@ Hacer la build con el comando:
 Pregunta id del proyecto, yo puse esto: com.andrac275.cincoTenedores (para tenerlo en cuenta)
 
 Si partirmos de un proyecto nuevo deberia funcionar todo sin problemas, pero si el proyecto ya tiene librerias y cosas instaladas, alomejor falla, y ahi habra que buscar como arreglarlo.
+
+#####################
+Nota: He conseguido buildear la apk del proyecto 5-tenedores simplemente con la instalacion del eas-cli, la buld:conf, la configuracion del eas.json 
+y el eas build --platform android --profile preview. No recuerdo como creé este proyecto, pero alomejor no es necesaria la manera en que se crea, eso 
+o utilice una manera de creacion compatible, en fin... Ha funcionado, es lo importante. 
